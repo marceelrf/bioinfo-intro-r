@@ -1,0 +1,65 @@
+---
+title: "Introdução a programação com a linguagem R"
+subtitle: "Introdução à Bioinformática | UNESP 2026"
+author: "Marcel Ferreira"
+date: today
+format:
+  revealjs:
+    theme: simple
+    transition: fade
+    transition-speed: slow
+    width: 1500
+    page-layout: full
+    chalkboard: true
+    reference-location: document
+    footer: "marcel.ferreira@unesp.br"
+    pointer:
+      pointerSize: 16
+      color: '#ff0800'
+revealjs-plugins:
+  - pointer
+editor: visual
+lang: pt-BR
+slide-number: c/t
+engine: knitr
+---
+
+## Sobre a linguagem R
+
+-   Criada em 1996 por Ross Ihaka e Robert Gentleman na Universidade de Auckland;
+
+-   Originalmente focada em análises estatísticas;
+
+-   *Open source*;
+
+-   Atualmente na versão `4.6.1;`
+
+## Comunidade incrível e atuante
+
+![](https://i.imgur.com/uHW16.jpg){fig-align="center"}
+
+## CRAN
+
+-   The Comprehensive R Archive Network;
+
+-   Para baixar e instalar no seu computador: <https://cran.r-project.org/>
+
+-   Você baixar pacotes e submeter novos pacotes;
+
+## Onde programar?
+
+-   Bloco de notas (risos);
+
+-   RStudio \[[link](https://posit.co/downloads)\];
+
+-   Positron \[[link](https://posit.co/products/ide/positron)\];
+
+-   VScode \[[link](https://code.visualstudio.com/)\];
+
+## Bioconductor
+
+-   Repositório de pacotes para bioinformática em R;
+
+-   <https://www.bioconductor.org/>;
+
+## A base da linguagem
