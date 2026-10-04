@@ -153,8 +153,8 @@ Marcel Ferreira
 <li><p>Atualmente na versão <code>4.6.1;</code></p></li>
 </ul>
 </section>
-<section id="comunidade-incrivel" class="slide level2">
-<h2>Comunidade incrivel</h2>
+<section id="comunidade-incrível-e-atuante" class="slide level2">
+<h2>Comunidade incrível e atuante</h2>
 
 <img data-src="https://i.imgur.com/uHW16.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="cran" class="slide level2">
@@ -162,6 +162,7 @@ Marcel Ferreira
 <ul>
 <li><p>The Comprehensive R Archive Network;</p></li>
 <li><p>Para baixar e instalar no seu computador: <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a></p></li>
+<li><p>Você baixar pacotes e submeter novos pacotes;</p></li>
 </ul>
 </section>
 <section id="onde-programar" class="slide level2">
@@ -171,6 +172,107 @@ Marcel Ferreira
 <li><p>RStudio [<a href="https://posit.co/downloads">link</a>];</p></li>
 <li><p>Positron [<a href="https://posit.co/products/ide/positron">link</a>];</p></li>
 <li><p>VScode [<a href="https://code.visualstudio.com/">link</a>];</p></li>
+</ul>
+</section>
+<section id="bioconductor" class="slide level2">
+<h2>Bioconductor</h2>
+<ul>
+<li><p>Repositório de pacotes para bioinformática em R;</p></li>
+<li><p><a href="https://www.bioconductor.org/" class="uri">https://www.bioconductor.org/</a>;</p></li>
+</ul>
+</section>
+<section id="a-base-da-linguagem" class="slide level2">
+<h2>A base da linguagem</h2>
+<ul>
+<li><p>No R, tudo que existe é um <strong>objeto</strong> e tudo que acontece é uma <strong>função</strong>;</p></li>
+<li><p>Guardamos valores em objetos com o operador de atribuição <code>&lt;-</code>;</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "logical"</code></pre>
+</div>
+</div>
+</section>
+<section id="estruturas-de-dados" class="slide level2">
+<h2>Estruturas de dados</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Um único tipo</th>
+<th style="text-align: center;">Tipos diferentes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1 dimensão</strong></td>
+<td style="text-align: center;"><strong>vetor</strong></td>
+<td style="text-align: center;"><strong>lista</strong></td>
+</tr>
+<tr class="even">
+<td><strong>2 dimensões</strong></td>
+<td style="text-align: center;"><strong>matriz</strong></td>
+<td style="text-align: center;"><strong>data frame</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Quase toda análise em bioinformática é feita com essas quatro estruturas;</p></li>
+<li><p>Um FASTA, um BED, um VCF, uma matriz de contagens: ao entrar no R, todos viram uma delas;</p></li>
+</ul>
+</section>
+<section id="vetores" class="slide level2">
+<h2>Vetores</h2>
+<ul>
+<li><p>Sequência <strong>ordenada</strong> de elementos do <strong>mesmo tipo</strong>;</p></li>
+<li><p>É a estrutura mais básica do R: um valor sozinho já é um vetor de tamanho 1;</p></li>
+<li><p>Criados com a função <code>c()</code>, de <em>combinar</em>;</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "RUNX2"  "SP7"    "ALPL"   "COL1A1" "BGLAP" </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   250    80  1320 15400    45</code></pre>
+</div>
+</div>
+</section>
+<section id="vetores-tipos" class="slide level2">
+<h2>Vetores: tipos</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "logical"</code></pre>
+</div>
+</div>
+<ul>
+<li><p><code>character</code>: nomes de genes, sequências, identificadores de amostras;</p></li>
+<li><p><code>numeric</code>: contagens, expressão, posições no genoma, valores de p;</p></li>
+<li><p><code>logical</code>: respostas de sim ou não (o gene é significativo? a amostra passou no controle de qualidade?);</p></li>
+</ul>
+</section>
+<section id="vetores-um-tipo-só" class="slide level2">
+<h2>Vetores: um tipo só</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1"  "6"  "12" "17" "X" </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Se os tipos forem misturados, o R converte tudo para o mais flexível: <code>logical</code> → <code>numeric</code> → <code>character</code>;</p></li>
+<li><p>É por isso que a coluna de cromossomos de um arquivo quase sempre é lida como texto (X, Y, MT);</p></li>
+<li><p>Não dá para fazer contas com texto: <code>"6" + 1</code> é um erro;</p></li>
 </ul>
 
 </section>

@@ -63,3 +63,224 @@ engine: knitr
 -   <https://www.bioconductor.org/>;
 
 ## A base da linguagem
+
+-   No R, tudo que existe é um **objeto** e tudo que acontece é uma **função**;
+
+-   Guardamos valores em objetos com o operador de atribuição `<-`;
+
+```{r}
+gene <- "RUNX2"        # texto (character)
+expressao <- 250.4     # número (numeric)
+codificante <- TRUE    # lógico (logical)
+
+class(gene)
+class(codificante)
+```
+
+## Estruturas de dados
+
+|                 | Um único tipo | Tipos diferentes |
+|-----------------|:-------------:|:----------------:|
+| **1 dimensão**  |   **vetor**   |    **lista**     |
+| **2 dimensões** |  **matriz**   |  **data frame**  |
+
+-   Quase toda análise em bioinformática é feita com essas quatro estruturas;
+
+-   Um FASTA, um BED, um VCF, uma matriz de contagens: ao entrar no R, todos viram uma delas;
+
+## Vetores
+
+-   Sequência **ordenada** de elementos do **mesmo tipo**;
+
+-   É a estrutura mais básica do R: um valor sozinho já é um vetor de tamanho 1;
+
+-   Criados com a função `c()`, de *combinar*;
+
+```{r}
+genes <- c("RUNX2", "SP7", "ALPL", "COL1A1", "BGLAP")
+expressao <- c(250, 80, 1320, 15400, 45)
+
+genes
+expressao
+```
+
+## Vetores: tipos
+
+```{r}
+class(genes)
+class(expressao)
+
+fator_transcricao <- c(TRUE, TRUE, FALSE, FALSE, FALSE)
+class(fator_transcricao)
+```
+
+-   `character`: nomes de genes, sequências, identificadores de amostras;
+
+-   `numeric`: contagens, expressão, posições no genoma, valores de p;
+
+-   `logical`: respostas de sim ou não (o gene é significativo? a amostra passou no controle de qualidade?);
+
+## Vetores: um tipo só
+
+```{r}
+cromossomos <- c(1, 6, 12, 17, "X")
+cromossomos
+class(cromossomos)
+```
+
+-   Se os tipos forem misturados, o R converte tudo para o mais flexível: `logical` → `numeric` → `character`;
+
+-   É por isso que a coluna de cromossomos de um arquivo quase sempre é lida como texto (X, Y, MT);
+
+-   Não dá para fazer contas com texto: `"6" + 1` é um erro;
+
+## Vetores: operações
+
+-   As operações são aplicadas a **todos os elementos de uma vez**, sem precisar de *loop*;
+
+```{r}
+log2(expressao + 1)
+
+expressao / sum(expressao) * 100     # % que cada gene representa do total
+
+expressao > 100
+```
+
+## Vetores: funções de resumo
+
+```{r}
+length(expressao)
+sum(expressao)
+mean(expressao)
+median(expressao)
+range(expressao)
+sort(expressao, decreasing = TRUE)
+```
+
+## Vetores: indexação
+
+-   Usamos colchetes `[ ]`. No R, a contagem começa em **1**;
+
+```{r}
+genes[1]                   # por posição
+genes[c(1, 3)]             # várias posições
+genes[-1]                  # todos, menos o primeiro
+genes[expressao > 100]     # por condição lógica
+```
+
+## Vetores: nomes
+
+-   Os elementos de um vetor podem ter nomes, e podemos indexar por eles;
+
+```{r}
+names(expressao) <- genes
+expressao
+
+expressao["COL1A1"]
+expressao[c("RUNX2", "SP7")]
+```
+
+## Vetores: perguntas do dia a dia
+
+```{r}
+meus_genes <- c("SP7", "TP53", "BGLAP")
+meus_genes %in% genes            # quais dos meus genes estão no experimento?
+
+which(expressao > 1000)          # em que posição estão os mais expressos?
+
+bases <- c("A", "T", "G", "G", "C", "C", "C", "T", "G", "T")
+table(bases)                     # quantas vezes cada base aparece?
+mean(bases %in% c("G", "C"))     # conteúdo GC
+```
+
+## Vetores: sequências
+
+-   Atalhos para criar vetores sem digitar elemento por elemento;
+
+```{r}
+1:6
+seq(from = 0, to = 21, by = 7)                    # dias de coleta
+rep(c("controle", "osteogenico"), each = 3)       # grupos experimentais
+```
+
+## Vetores: valores ausentes
+
+-   `NA` representa um dado ausente, e qualquer conta com `NA` devolve `NA`;
+
+```{r}
+ct <- c(24.1, 23.8, NA, 25.0)      # Ct de qPCR: um poço não amplificou
+mean(ct)
+mean(ct, na.rm = TRUE)          # na.rm = remova os NA antes de calcular
+is.na(ct)
+```
+
+## Fatores
+
+-   Vetores para **variáveis categóricas**: grupo experimental, sexo, genótipo, lote;
+
+```{r}
+condicao <- rep(c("controle", "osteogenico"), each = 3)
+condicao <- factor(condicao, levels = c("controle", "osteogenico"))
+
+condicao
+table(condicao)
+```
+
+-   A ordem dos níveis define o **grupo de referência** nos modelos (DESeq2, limma);
+
+## Matrizes
+
+-   Um vetor com **duas dimensões**: linhas e colunas;
+
+-   Todos os elementos são do **mesmo tipo**;
+
+-   O exemplo clássico: a **matriz de contagens** (genes × amostras);
+
+```{r}
+contagens <- matrix(
+  c(  250,   310,   280,   890,  1020,   950,
+       80,    95,    70,   400,   460,   510,
+     1320,  1100,  1250,  5200,  4800,  5600,
+    15400, 14900, 16100, 31000, 29500, 33000,
+       45,    60,    38,   720,   810,   690),
+  nrow = 5, byrow = TRUE,
+  dimnames = list(genes, c("ctrl_1", "ctrl_2", "ctrl_3", "osteo_1", "osteo_2", "osteo_3"))
+)
+```
+
+## Matrizes: a matriz de contagens
+
+```{r}
+contagens
+
+dim(contagens)
+rownames(contagens)
+colnames(contagens)
+```
+
+## Matrizes: indexação
+
+-   Agora são dois índices: `[linha, coluna]`. Deixar um deles vazio significa "todos";
+
+```{r}
+contagens["RUNX2", ]              # um gene, todas as amostras
+contagens[, "osteo_1"]            # todos os genes, uma amostra
+contagens[c("SP7", "BGLAP"), 4:6] # um pedaço da matriz
+```
+
+## Matrizes: operações
+
+```{r}
+colSums(contagens)                # tamanho da biblioteca de cada amostra
+rowMeans(contagens)               # expressão média de cada gene
+round(log2(contagens + 1), 1)     # a matriz inteira de uma vez
+```
+
+## Matrizes: da matriz ao *heatmap*
+
+```{r}
+#| fig-width: 9
+#| fig-height: 4
+#| fig-align: center
+heatmap(log2(contagens + 1), scale = "row", Colv = NA, margins = c(7, 7))
+```
