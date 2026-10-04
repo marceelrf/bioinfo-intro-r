@@ -274,6 +274,455 @@ Marcel Ferreira
 <li><p>É por isso que a coluna de cromossomos de um arquivo quase sempre é lida como texto (X, Y, MT);</p></li>
 <li><p>Não dá para fazer contas com texto: <code>"6" + 1</code> é um erro;</p></li>
 </ul>
+</section>
+<section id="vetores-operações" class="slide level2">
+<h2>Vetores: operações</h2>
+<ul>
+<li>As operações são aplicadas a <strong>todos os elementos de uma vez</strong>, sem precisar de <em>loop</em>;</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  7.971544  6.339850 10.367415 13.910736  5.523562</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1.4624159  0.4679731  7.7215560 90.0848201  0.2632349</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE  TRUE  TRUE FALSE</code></pre>
+</div>
+</div>
+</section>
+<section id="vetores-funções-de-resumo" class="slide level2">
+<h2>Vetores: funções de resumo</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17095</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3419</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 250</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]    45 15400</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15400  1320   250    80    45</code></pre>
+</div>
+</div>
+</section>
+<section id="vetores-indexação" class="slide level2">
+<h2>Vetores: indexação</h2>
+<ul>
+<li>Usamos colchetes <code>[ ]</code>. No R, a contagem começa em <strong>1</strong>;</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "RUNX2"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "RUNX2" "ALPL" </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SP7"    "ALPL"   "COL1A1" "BGLAP" </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "RUNX2"  "ALPL"   "COL1A1"</code></pre>
+</div>
+</div>
+</section>
+<section id="vetores-nomes" class="slide level2">
+<h2>Vetores: nomes</h2>
+<ul>
+<li>Os elementos de um vetor podem ter nomes, e podemos indexar por eles;</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> RUNX2    SP7   ALPL COL1A1  BGLAP 
+   250     80   1320  15400     45 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>COL1A1 
+ 15400 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>RUNX2   SP7 
+  250    80 </code></pre>
+</div>
+</div>
+</section>
+<section id="vetores-perguntas-do-dia-a-dia" class="slide level2">
+<h2>Vetores: perguntas do dia a dia</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE  TRUE</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ALPL COL1A1 
+     3      4 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>bases
+A C G T 
+1 3 3 3 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6</code></pre>
+</div>
+</div>
+</section>
+<section id="vetores-sequências" class="slide level2">
+<h2>Vetores: sequências</h2>
+<ul>
+<li>Atalhos para criar vetores sem digitar elemento por elemento;</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5 6</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0  7 14 21</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "controle"    "controle"    "controle"    "osteogenico" "osteogenico"
+[6] "osteogenico"</code></pre>
+</div>
+</div>
+</section>
+<section id="vetores-valores-ausentes" class="slide level2">
+<h2>Vetores: valores ausentes</h2>
+<ul>
+<li><code>NA</code> representa um dado ausente, e qualquer conta com <code>NA</code> devolve <code>NA</code>;</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24.3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE  TRUE FALSE</code></pre>
+</div>
+</div>
+</section>
+<section id="fatores" class="slide level2">
+<h2>Fatores</h2>
+<ul>
+<li>Vetores para <strong>variáveis categóricas</strong>: grupo experimental, sexo, genótipo, lote;</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] controle    controle    controle    osteogenico osteogenico osteogenico
+Levels: controle osteogenico</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>condicao
+   controle osteogenico 
+          3           3 </code></pre>
+</div>
+</div>
+<ul>
+<li>A ordem dos níveis define o <strong>grupo de referência</strong> nos modelos (DESeq2, limma);</li>
+</ul>
+</section>
+<section id="matrizes" class="slide level2">
+<h2>Matrizes</h2>
+<ul>
+<li><p>Um vetor com <strong>duas dimensões</strong>: linhas e colunas;</p></li>
+<li><p>Todos os elementos são do <strong>mesmo tipo</strong>;</p></li>
+<li><p>O exemplo clássico: a <strong>matriz de contagens</strong> (genes × amostras);</p></li>
+</ul>
+</section>
+<section id="matrizes-a-matriz-de-contagens" class="slide level2">
+<h2>Matrizes: a matriz de contagens</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       ctrl_1 ctrl_2 ctrl_3 osteo_1 osteo_2 osteo_3
+RUNX2     250    310    280     890    1020     950
+SP7        80     95     70     400     460     510
+ALPL     1320   1100   1250    5200    4800    5600
+COL1A1  15400  14900  16100   31000   29500   33000
+BGLAP      45     60     38     720     810     690</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 6</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "RUNX2"  "SP7"    "ALPL"   "COL1A1" "BGLAP" </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ctrl_1"  "ctrl_2"  "ctrl_3"  "osteo_1" "osteo_2" "osteo_3"</code></pre>
+</div>
+</div>
+</section>
+<section id="matrizes-indexação" class="slide level2">
+<h2>Matrizes: indexação</h2>
+<ul>
+<li>Agora são dois índices: <code>[linha, coluna]</code>. Deixar um deles vazio significa “todos”;</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> ctrl_1  ctrl_2  ctrl_3 osteo_1 osteo_2 osteo_3 
+    250     310     280     890    1020     950 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> RUNX2    SP7   ALPL COL1A1  BGLAP 
+   890    400   5200  31000    720 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      osteo_1 osteo_2 osteo_3
+SP7       400     460     510
+BGLAP     720     810     690</code></pre>
+</div>
+</div>
+</section>
+<section id="matrizes-operações" class="slide level2">
+<h2>Matrizes: operações</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> ctrl_1  ctrl_2  ctrl_3 osteo_1 osteo_2 osteo_3 
+  17095   16465   17738   38210   36590   40750 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     RUNX2        SP7       ALPL     COL1A1      BGLAP 
+  616.6667   269.1667  3211.6667 23316.6667   393.8333 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       ctrl_1 ctrl_2 ctrl_3 osteo_1 osteo_2 osteo_3
+RUNX2     8.0    8.3    8.1     9.8    10.0     9.9
+SP7       6.3    6.6    6.1     8.6     8.8     9.0
+ALPL     10.4   10.1   10.3    12.3    12.2    12.5
+COL1A1   13.9   13.9   14.0    14.9    14.8    15.0
+BGLAP     5.5    5.9    5.3     9.5     9.7     9.4</code></pre>
+</div>
+</div>
+</section>
+<section id="matrizes-da-matriz-ao-heatmap" class="slide level2">
+<h2>Matrizes: da matriz ao <em>heatmap</em></h2>
+
+<img data-src="press_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<section id="data-frames" class="slide level2">
+<h2>Data frames</h2>
+<ul>
+<li><p>Uma <strong>tabela</strong>: cada coluna é um vetor, e cada coluna pode ter um <strong>tipo diferente</strong>;</p></li>
+<li><p>Todas as colunas têm o mesmo comprimento;</p></li>
+<li><p>Linhas são observações (amostras, genes, variantes) e colunas são variáveis;</p></li>
+<li><p>Em bioinformática: tabela de amostras, anotação de genes, arquivos BED, VCF e GTF, resultados de expressão diferencial;</p></li>
+</ul>
+</section>
+<section id="data-frames-a-tabela-de-amostras" class="slide level2">
+<h2>Data frames: a tabela de amostras</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  amostra    condicao dia rin
+1  ctrl_1    controle   0 9.1
+2  ctrl_2    controle   0 8.7
+3  ctrl_3    controle   0 9.3
+4 osteo_1 osteogenico  14 9.4
+5 osteo_2 osteogenico  14 7.2
+6 osteo_3 osteogenico  14 8.9</code></pre>
+</div>
+</div>
+</section>
+<section id="data-frames-inspecionando" class="slide level2">
+<h2>Data frames: inspecionando</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   6 obs. of  4 variables:
+ $ amostra : chr  "ctrl_1" "ctrl_2" "ctrl_3" "osteo_1" ...
+ $ condicao: chr  "controle" "controle" "controle" "osteogenico" ...
+ $ dia     : num  0 0 0 14 14 14
+ $ rin     : num  9.1 8.7 9.3 9.4 7.2 8.9</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6 4</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "amostra"  "condicao" "dia"      "rin"     </code></pre>
+</div>
+</div>
+</section>
+<section id="data-frames-acessando" class="slide level2">
+<h2>Data frames: acessando</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.1 8.7 9.3 9.4 7.2 8.9</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  amostra condicao dia rin
+2  ctrl_2 controle   0 8.7</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  amostra rin
+1  ctrl_1 9.1
+2  ctrl_2 8.7
+3  ctrl_3 9.3
+4 osteo_1 9.4
+6 osteo_3 8.9</code></pre>
+</div>
+</div>
+</section>
+<section id="data-frames-criando-colunas" class="slide level2">
+<h2>Data frames: criando colunas</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  amostra    condicao dia rin aprovada biblioteca
+1  ctrl_1    controle   0 9.1     TRUE      17095
+2  ctrl_2    controle   0 8.7     TRUE      16465
+3  ctrl_3    controle   0 9.3     TRUE      17738
+4 osteo_1 osteogenico  14 9.4     TRUE      38210
+5 osteo_2 osteogenico  14 7.2    FALSE      36590
+6 osteo_3 osteogenico  14 8.9     TRUE      40750</code></pre>
+</div>
+</div>
+<ul>
+<li>Matriz de contagens + tabela de amostras: a base de quase toda análise de RNA-seq;</li>
+</ul>
+</section>
+<section id="data-frames-lendo-arquivos" class="slide level2">
+<h2>Data frames: lendo arquivos</h2>
+<ul>
+<li>Na prática, raramente digitamos um data frame: ele vem de um <strong>arquivo</strong>;</li>
+</ul>
+<ul>
+<li><code>head()</code>, <code>str()</code> e <code>summary()</code> são as primeiras funções a rodar depois de ler qualquer arquivo;</li>
+</ul>
+</section>
+<section id="listas" class="slide level2">
+<h2>Listas</h2>
+<ul>
+<li><p>Um vetor “genérico”: cada elemento pode ser <strong>qualquer coisa</strong>, de qualquer tamanho;</p></li>
+<li><p>Em bioinformática: conjuntos de genes (vias), resultados de testes estatísticos, objetos do Bioconductor;</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 3
+ $ osteogenese        : chr [1:4] "RUNX2" "SP7" "ALPL" "BGLAP"
+ $ matriz_extracelular: chr [1:5] "COL1A1" "COL1A2" "SPARC" "FN1" ...
+ $ glicolise          : chr [1:3] "HK2" "PKM" "LDHA"</code></pre>
+</div>
+</div>
+</section>
+<section id="listas-acessando" class="slide level2">
+<h2>Listas: acessando</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "osteogenese"         "matriz_extracelular" "glicolise"          </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "HK2"  "PKM"  "LDHA"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "RUNX2" "SP7"   "ALPL"  "BGLAP"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$osteogenese
+[1] "RUNX2" "SP7"   "ALPL"  "BGLAP"</code></pre>
+</div>
+</div>
+<ul>
+<li><code>[[ ]]</code> e <code>$</code> devolvem o <strong>conteúdo</strong>; <code>[ ]</code> devolve outra lista;</li>
+</ul>
+</section>
+<section id="listas-aplicando-funções" class="slide level2">
+<h2>Listas: aplicando funções</h2>
+<ul>
+<li><code>sapply()</code> aplica uma função a cada elemento da lista;</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        osteogenese matriz_extracelular           glicolise 
+                  4                   5                   3 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        osteogenese matriz_extracelular           glicolise 
+                  4                   1                   0 </code></pre>
+</div>
+</div>
+<ul>
+<li>Essa pergunta é o ponto de partida de uma análise de enriquecimento;</li>
+</ul>
+</section>
+<section id="listas-resultados-são-listas" class="slide level2">
+<h2>Listas: resultados são listas</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "statistic"   "parameter"   "p.value"     "conf.int"    "estimate"   
+ [6] "null.value"  "stderr"      "alternative" "method"      "data.name"  </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0002280843</code></pre>
+</div>
+</div>
+<ul>
+<li>Quase toda função de análise devolve uma lista; saber extrair elementos dela é essencial;</li>
+</ul>
+</section>
+<section id="listas-juntando-tudo" class="slide level2">
+<h2>Listas: juntando tudo</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ projeto  : chr "MSC_osteo_2026"
+ $ contagens: num [1:5, 1:6] 250 80 1320 15400 45 310 95 1100 14900 60 ...
+  ..- attr(*, "dimnames")=List of 2
+ $ amostras :'data.frame':  6 obs. of  6 variables:
+ $ vias     :List of 3</code></pre>
+</div>
+</div>
+<ul>
+<li>É essa a lógica dos objetos do Bioconductor, como o <code>SummarizedExperiment</code>: contagens, amostras e anotação em um objeto só;</li>
+</ul>
+</section>
+<section id="resumo-das-estruturas" class="slide level2">
+<h2>Resumo das estruturas</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 15%">
+<col style="width: 20%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estrutura</th>
+<th style="text-align: center;">Dimensões</th>
+<th>Tipos</th>
+<th>Exemplo em bioinformática</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Vetor</strong></td>
+<td style="text-align: center;">1</td>
+<td>um só</td>
+<td>expressão de um gene</td>
+</tr>
+<tr class="even">
+<td><strong>Matriz</strong></td>
+<td style="text-align: center;">2</td>
+<td>um só</td>
+<td>contagens (genes × amostras)</td>
+</tr>
+<tr class="odd">
+<td><strong>Data frame</strong></td>
+<td style="text-align: center;">2</td>
+<td>um por coluna</td>
+<td>tabela de amostras, BED, VCF</td>
+</tr>
+<tr class="even">
+<td><strong>Lista</strong></td>
+<td style="text-align: center;">1</td>
+<td>qualquer</td>
+<td>vias, resultado de um teste</td>
+</tr>
+</tbody>
+</table>
 
 </section>
     </div>
