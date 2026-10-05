@@ -42,7 +42,7 @@ engine: knitr
 
 -   The Comprehensive R Archive Network;
 
--   Para baixar e instalar no seu computador: <https://cran.r-project.org/>
+-   Para baixar e instalar no seu computador: [https://cran.r-project.org/](https://cran.r-project.org/){target="_blank"}
 
 -   Você baixar pode pacotes e submeter novos pacotes;
 
@@ -50,11 +50,13 @@ engine: knitr
 
 -   Bloco de notas (risos);
 
--   RStudio \[[link](https://posit.co/downloads)\];
+-   RStudio \[[link](https://posit.co/downloads){target="_blank"}\];
 
--   Positron \[[link](https://posit.co/products/ide/positron)\];
+-   Positron \[[link](https://posit.co/products/ide/positron){target="_blank"}\];
 
--   VScode \[[link](https://code.visualstudio.com/)\];
+-   VScode \[[link](https://code.visualstudio.com/){target="_blank"}\];
+
+-   Google Colab \[[link](https://colab.research.google.com/){target="_blank"}\];
 
 ## Bioconductor
 
@@ -64,11 +66,20 @@ engine: knitr
 
 ## A base da linguagem
 
+```{r}
+#| include: false
+options(digits = 4)
+```
+
 -   No R, tudo que existe é um **objeto** e tudo que acontece é uma **função**;
 
 -   Guardamos valores em objetos com o operador de atribuição `<-`;
 
 ```{r}
+#| echo: true
+#| results: hold
+#| output-location: fragment
+
 gene <- "RUNX2"        # texto (character)
 expressao <- 250.4     # número (numeric)
 codificante <- TRUE    # lógico (logical)
@@ -76,6 +87,185 @@ codificante <- TRUE    # lógico (logical)
 class(gene)
 class(codificante)
 ```
+
+## Funções
+
+-   Toda função tem a mesma cara: `nome(argumentos)`;
+
+-   Os argumentos têm **nome** e, muitas vezes, um **valor padrão**;
+
+```{r}
+#| echo: true
+#| results: hold
+#| output-location: column-fragment
+round(3.14159)
+round(3.14159, digits = 2)
+round(digits = 2, x = 3.14159)
+sqrt(16)
+toupper("atgc")
+nchar("ATGGCCCTG")
+```
+
+-   Com os nomes, a ordem dos argumentos deixa de importar;
+
+## Pedindo ajuda
+
+```{r}
+#| echo: true
+#| eval: false
+?t.test                    # abre a página de ajuda da função
+help("t.test")             # faz o mesmo
+example("mean")            # roda os exemplos da página de ajuda
+??"normal distribution"    # procura um termo em todos os pacotes instalados
+```
+
+::: callout-tip
+## Como ler uma página de ajuda
+
+Todas têm a mesma estrutura: *Description*, *Usage*, *Arguments*, *Value* e *Examples*. Na dúvida, comece pelos **exemplos**.
+:::
+
+-   Fora do R: [Stack Overflow](https://stackoverflow.com/questions/tagged/r), [Posit Community](https://forum.posit.co/), [suporte do Bioconductor](https://support.bioconductor.org/) e os assistentes de IA;
+
+## Instalando pacotes
+
+::: panel-tabset
+### CRAN
+
+```{r}
+#| echo: true
+#| eval: false
+install.packages("tidyverse")    # instala: uma vez por computador
+
+library(tidyverse)               # carrega: a cada nova sessão
+```
+
+### Bioconductor
+
+```{r}
+#| echo: true
+#| eval: false
+install.packages("BiocManager")  # o instalador do Bioconductor vem do CRAN
+
+BiocManager::install("DESeq2")   # instala um pacote do Bioconductor
+
+library(DESeq2)
+```
+
+### GitHub
+
+```{r}
+#| echo: true
+#| eval: false
+install.packages("remotes")
+
+remotes::install_github("usuario/pacote")   # pacotes em desenvolvimento
+```
+:::
+
+-   **Instalar** é comprar o livro; **carregar** com `library()` é tirá-lo da estante;
+
+-   `pacote::funcao()` usa uma função sem carregar o pacote inteiro;
+
+## Gerando dados aleatórios
+
+-   `rnorm()` sorteia valores de uma distribuição normal. Da mesma família: `runif()`, `rbinom()`, `rpois()` e `sample()`;
+
+```{r}
+#| echo: true
+#| output-location: fragment
+rnorm(n = 5, mean = 10, sd = 2)
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+rnorm(n = 5, mean = 10, sd = 2)    # de novo: os valores mudam!
+```
+
+## Reprodutibilidade: `set.seed()`
+
+-   Fixar a **semente** faz o sorteio dar sempre o mesmo resultado;
+
+```{r}
+#| echo: true
+#| output-location: fragment
+set.seed(2026)
+rnorm(n = 5, mean = 10, sd = 2)
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+set.seed(2026)
+rnorm(n = 5, mean = 10, sd = 2)
+```
+
+. . . 
+
+::: callout-important
+## Em análises reais
+
+Fixe a semente sempre que houver sorteio: simulações, *bootstrap*, UMAP, t-SNE, *k-means*.
+:::
+
+## Simulando um experimento
+
+-   A expressão (em log2) de um gene em 10 amostras controle e 10 tratadas;
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|1|3|4|6-7"
+#| results: hold
+#| output-location: fragment
+set.seed(2026)
+
+controle <- rnorm(n = 10, mean = 8,   sd = 1)
+tratado  <- rnorm(n = 10, mean = 9.5, sd = 1)
+
+mean(controle)
+mean(tratado)
+```
+
+## Olhando os dados
+
+::: panel-tabset
+### Boxplot
+
+```{r}
+#| echo: true
+#| fig-width: 9
+#| fig-height: 4
+#| out-width: 50%
+#| fig-align: center
+boxplot(controle, tratado, names = c("controle", "tratado"), ylab = "Expressão (log2)")
+```
+
+### Histograma
+
+```{r}
+#| echo: true
+#| fig-width: 9
+#| fig-height: 4
+#| out-width: 50%
+#| fig-align: center
+hist(rnorm(n = 10000, mean = 8, sd = 1), breaks = 50, main = "", xlab = "Expressão (log2)")
+```
+:::
+
+## Teste t
+
+-   As médias dos dois grupos são diferentes, ou a diferença pode ser obra do acaso?
+
+```{r}
+#| echo: true
+#| output-location: column-fragment
+teste <- t.test(tratado, controle)
+
+teste
+```
+
+-   Olhe para o **valor de p**, o intervalo de confiança da diferença e as médias;
 
 ## Estruturas de dados
 
@@ -97,6 +287,8 @@ class(codificante)
 -   Criados com a função `c()`, de *combinar*;
 
 ```{r}
+#| echo: true
+
 genes <- c("RUNX2", "SP7", "ALPL", "COL1A1", "BGLAP")
 expressao <- c(250, 80, 1320, 15400, 45)
 
@@ -107,6 +299,8 @@ expressao
 ## Vetores: tipos
 
 ```{r}
+#| echo: true
+
 class(genes)
 class(expressao)
 
@@ -123,10 +317,15 @@ class(fator_transcricao)
 ## Vetores: um tipo só
 
 ```{r}
+#| echo: true
+#| output-location: fragment
+
 cromossomos <- c(1, 6, 12, 17, "X")
 cromossomos
 class(cromossomos)
 ```
+
+. . .
 
 -   Se os tipos forem misturados, o R converte tudo para o mais flexível: `logical` → `numeric` → `character`;
 
@@ -139,16 +338,29 @@ class(cromossomos)
 -   As operações são aplicadas a **todos os elementos de uma vez**, sem precisar de *loop*;
 
 ```{r}
+#| echo: true
+#| output-location: fragment
 log2(expressao + 1)
+```
 
+```{r}
+#| echo: true
+#| output-location: fragment
 expressao / sum(expressao) * 100     # % que cada gene representa do total
+```
 
+```{r}
+#| echo: true
+#| output-location: fragment
 expressao > 100
 ```
 
 ## Vetores: funções de resumo
 
 ```{r}
+#| echo: true
+#| results: hold
+#| output-location: column
 length(expressao)
 sum(expressao)
 mean(expressao)
@@ -162,9 +374,26 @@ sort(expressao, decreasing = TRUE)
 -   Usamos colchetes `[ ]`. No R, a contagem começa em **1**;
 
 ```{r}
+#| echo: true
+#| output-location: fragment
 genes[1]                   # por posição
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
 genes[c(1, 3)]             # várias posições
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
 genes[-1]                  # todos, menos o primeiro
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
 genes[expressao > 100]     # por condição lógica
 ```
 
@@ -173,6 +402,7 @@ genes[expressao > 100]     # por condição lógica
 -   Os elementos de um vetor podem ter nomes, e podemos indexar por eles;
 
 ```{r}
+#| echo: true
 names(expressao) <- genes
 expressao
 
@@ -182,22 +412,42 @@ expressao[c("RUNX2", "SP7")]
 
 ## Vetores: perguntas do dia a dia
 
+::: panel-tabset
+### Está na lista?
+
 ```{r}
+#| echo: true
 meus_genes <- c("SP7", "TP53", "BGLAP")
-meus_genes %in% genes            # quais dos meus genes estão no experimento?
 
-which(expressao > 1000)          # em que posição estão os mais expressos?
-
-bases <- c("A", "T", "G", "G", "C", "C", "C", "T", "G", "T")
-table(bases)                     # quantas vezes cada base aparece?
-mean(bases %in% c("G", "C"))     # conteúdo GC
+meus_genes %in% genes              # quais dos meus genes estão no experimento?
+meus_genes[meus_genes %in% genes]
 ```
+
+### Onde está?
+
+```{r}
+#| echo: true
+which(expressao > 1000)            # em que posição estão os mais expressos?
+which.max(expressao)               # e o mais expresso de todos?
+```
+
+### Quantos de cada?
+
+```{r}
+#| echo: true
+bases <- c("A", "T", "G", "G", "C", "C", "C", "T", "G", "T")
+
+table(bases)                       # quantas vezes cada base aparece?
+mean(bases %in% c("G", "C"))       # conteúdo GC
+```
+:::
 
 ## Vetores: sequências
 
 -   Atalhos para criar vetores sem digitar elemento por elemento;
 
 ```{r}
+#| echo: true
 1:6
 seq(from = 0, to = 21, by = 7)                    # dias de coleta
 rep(c("controle", "osteogenico"), each = 3)       # grupos experimentais
@@ -208,9 +458,21 @@ rep(c("controle", "osteogenico"), each = 3)       # grupos experimentais
 -   `NA` representa um dado ausente, e qualquer conta com `NA` devolve `NA`;
 
 ```{r}
+#| echo: true
+#| output-location: fragment
 ct <- c(24.1, 23.8, NA, 25.0)      # Ct de qPCR: um poço não amplificou
 mean(ct)
-mean(ct, na.rm = TRUE)          # na.rm = remova os NA antes de calcular
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+mean(ct, na.rm = TRUE)             # na.rm = remova os NA antes de calcular
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
 is.na(ct)
 ```
 
@@ -219,6 +481,10 @@ is.na(ct)
 -   Vetores para **variáveis categóricas**: grupo experimental, sexo, genótipo, lote;
 
 ```{r}
+#| echo: true
+#| code-line-numbers: "|1|2|4-5"
+#| results: hold
+#| output-location: fragment
 condicao <- rep(c("controle", "osteogenico"), each = 3)
 condicao <- factor(condicao, levels = c("controle", "osteogenico"))
 
@@ -237,20 +503,25 @@ table(condicao)
 -   O exemplo clássico: a **matriz de contagens** (genes × amostras);
 
 ```{r}
+#| echo: true
 contagens <- matrix(
-  c(  250,   310,   280,   890,  1020,   950,
+  c(  250,   310,   280,   890,  1020,   950,                # <1>
        80,    95,    70,   400,   460,   510,
      1320,  1100,  1250,  5200,  4800,  5600,
     15400, 14900, 16100, 31000, 29500, 33000,
        45,    60,    38,   720,   810,   690),
-  nrow = 5, byrow = TRUE,
-  dimnames = list(genes, c("ctrl_1", "ctrl_2", "ctrl_3", "osteo_1", "osteo_2", "osteo_3"))
+  nrow = 5, byrow = TRUE,                                    # <2>
+  dimnames = list(                                           # <3>
+    genes,
+    c("ctrl_1", "ctrl_2", "ctrl_3", "osteo_1", "osteo_2", "osteo_3")
+  )
 )
 ```
 
 ## Matrizes: a matriz de contagens
 
 ```{r}
+#| echo: true
 contagens
 
 dim(contagens)
@@ -263,14 +534,27 @@ colnames(contagens)
 -   Agora são dois índices: `[linha, coluna]`. Deixar um deles vazio significa "todos";
 
 ```{r}
-contagens["RUNX2", ]              # um gene, todas as amostras
-contagens[, "osteo_1"]            # todos os genes, uma amostra
-contagens[c("SP7", "BGLAP"), 4:6] # um pedaço da matriz
+#| echo: true
+#| output-location: fragment
+contagens["RUNX2", ]                # um gene, todas as amostras
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+contagens[, "osteo_1"]              # todos os genes, uma amostra
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+contagens[c("SP7", "BGLAP"), 4:6]   # um pedaço da matriz
 ```
 
 ## Matrizes: operações
 
 ```{r}
+#| echo: true
 colSums(contagens)                # tamanho da biblioteca de cada amostra
 rowMeans(contagens)               # expressão média de cada gene
 round(log2(contagens + 1), 1)     # a matriz inteira de uma vez
@@ -279,6 +563,7 @@ round(log2(contagens + 1), 1)     # a matriz inteira de uma vez
 ## Matrizes: da matriz ao *heatmap*
 
 ```{r}
+#| echo: true
 #| fig-width: 9
 #| fig-height: 4
 #| fig-align: center
@@ -298,6 +583,9 @@ heatmap(log2(contagens + 1), scale = "row", Colv = NA, margins = c(7, 7))
 ## Data frames: a tabela de amostras
 
 ```{r}
+#| echo: true
+#| code-line-numbers: "|2|3|4|5|8"
+#| output-location: fragment
 amostras <- data.frame(
   amostra  = colnames(contagens),
   condicao = rep(c("controle", "osteogenico"), each = 3),
@@ -311,6 +599,7 @@ amostras
 ## Data frames: inspecionando
 
 ```{r}
+#| echo: true
 str(amostras)
 
 dim(amostras)
@@ -320,16 +609,28 @@ names(amostras)
 ## Data frames: acessando
 
 ```{r}
+#| echo: true
+#| output-location: fragment
 amostras$rin                          # uma coluna vira um vetor
+```
 
+```{r}
+#| echo: true
+#| output-location: fragment
 amostras[2, ]                         # uma linha
+```
 
+```{r}
+#| echo: true
+#| output-location: fragment
 amostras[amostras$rin >= 8, c("amostra", "rin")]   # filtrando linhas e escolhendo colunas
 ```
 
 ## Data frames: criando colunas
 
 ```{r}
+#| echo: true
+#| code-line-numbers: "|1|2"
 amostras$aprovada <- amostras$rin >= 8
 amostras$biblioteca <- colSums(contagens)
 
@@ -343,13 +644,18 @@ amostras
 -   Na prática, raramente digitamos um data frame: ele vem de um **arquivo**;
 
 ```{r}
+#| echo: true
 #| eval: false
 amostras   <- read.csv("amostras.csv")
 anotacao   <- read.table("genes.bed", sep = "\t", header = FALSE)
 resultados <- read.delim("expressao_diferencial.tsv")
 ```
 
--   `head()`, `str()` e `summary()` são as primeiras funções a rodar depois de ler qualquer arquivo;
+::: callout-tip
+## Depois de ler qualquer arquivo
+
+Rode `head()`, `str()` e `summary()` antes de fazer qualquer outra coisa.
+:::
 
 ## Listas
 
@@ -358,6 +664,9 @@ resultados <- read.delim("expressao_diferencial.tsv")
 -   Em bioinformática: conjuntos de genes (vias), resultados de testes estatísticos, objetos do Bioconductor;
 
 ```{r}
+#| echo: true
+#| code-line-numbers: "|2|3|4|7"
+#| output-location: fragment
 vias <- list(
   osteogenese = c("RUNX2", "SP7", "ALPL", "BGLAP"),
   matriz_extracelular = c("COL1A1", "COL1A2", "SPARC", "FN1", "SPP1"),
@@ -370,10 +679,20 @@ str(vias)
 ## Listas: acessando
 
 ```{r}
-names(vias)
-
+#| echo: true
+#| output-location: fragment
 vias$glicolise              # o conteúdo (um vetor)
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
 vias[["osteogenese"]]       # o conteúdo (um vetor)
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
 vias["osteogenese"]         # uma lista menor
 ```
 
@@ -384,6 +703,7 @@ vias["osteogenese"]         # uma lista menor
 -   `sapply()` aplica uma função a cada elemento da lista;
 
 ```{r}
+#| echo: true
 sapply(vias, length)        # quantos genes tem cada via?
 
 # quantos genes de cada via estão no meu experimento?
@@ -394,20 +714,24 @@ sapply(vias, function(via) sum(via %in% genes))
 
 ## Listas: resultados são listas
 
-```{r}
-teste <- t.test(log2(contagens["RUNX2", 1:3]),
-                log2(contagens["RUNX2", 4:6]))
+-   Lembra do `teste`, o resultado do `t.test()`? Ele é uma lista;
 
+```{r}
+#| echo: true
 names(teste)
 
 teste$p.value
+teste$estimate
 ```
 
 -   Quase toda função de análise devolve uma lista; saber extrair elementos dela é essencial;
 
+
 ## Listas: juntando tudo
 
 ```{r}
+#| echo: true
+#| code-line-numbers: "|2|3|4|5|8"
 experimento <- list(
   projeto   = "MSC_osteo_2026",
   contagens = contagens,
@@ -428,3 +752,308 @@ str(experimento, max.level = 1)
 | **Matriz**     |     2     | um só         | contagens (genes × amostras) |
 | **Data frame** |     2     | um por coluna | tabela de amostras, BED, VCF |
 | **Lista**      |     1     | qualquer      | vias, resultado de um teste  |
+
+## Criando funções: por quê?
+
+-   Copiou e colou o mesmo código pela terceira vez? É hora de escrever uma função;
+
+-   Menos repetição, menos erros: a correção é feita em um lugar só;
+
+-   Um bom nome documenta o código: `conteudo_gc(sequencia)` se explica sozinho;
+
+-   É o primeiro passo da **automatização**: a mesma análise para 1 ou para 10.000 sequências;
+
+## Sequências de DNA são texto
+
+```{r}
+#| echo: true
+#| output-location: fragment
+seq_dna <- "ATGGCGTACGCTTAGGCTAACGGTCA"
+
+nchar(seq_dna)                         # comprimento da sequência
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+bases <- strsplit(seq_dna, "")[[1]]    # separa o texto em um vetor de bases
+bases
+```
+
+-   `strsplit()` devolve uma **lista**: por isso o `[[1]]` para pegar o conteúdo;
+
+-   Com as bases em um vetor, vale tudo o que já vimos: indexar, contar, comparar;
+
+## Conteúdo GC: passo a passo
+
+-   Antes de escrever a função, resolvemos o problema para **uma** sequência;
+
+```{r}
+#| echo: true
+#| output-location: fragment
+bases %in% c("G", "C")                 # a base é G ou C?
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+mean(bases %in% c("G", "C")) * 100     # a média de TRUE/FALSE é a proporção de TRUE
+```
+
+## Conteúdo GC: a função
+
+```{r}
+#| echo: true
+# calcula o conteúdo GC (em %) de uma sequência de DNA
+conteudo_gc <- function(sequencia) {                  # <1>
+  bases <- strsplit(toupper(sequencia), "")[[1]]      # <2>
+  gc <- mean(bases %in% c("G", "C")) * 100            # <2>
+  round(gc, 1)                                        # <3>
+}
+```
+
+1.  O nome da função e, entre parênteses, os argumentos: o que muda a cada uso;
+2.  O corpo: os mesmos passos de antes, agora com `toupper()` para aceitar minúsculas;
+3.  A última linha é o resultado que a função devolve;
+
+```{r}
+#| echo: true
+#| results: hold
+#| output-location: column-fragment
+conteudo_gc(seq_dna)
+conteudo_gc("atatatatgc")
+conteudo_gc("GGGCCCGGGCCC")
+```
+
+## Reverso complementar
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|2|3|4"
+reverso_complementar <- function(sequencia) {
+  bases <- strsplit(toupper(sequencia), "")[[1]]     # separa as bases
+  invertida <- paste(rev(bases), collapse = "")      # inverte a ordem e cola de volta
+  chartr("ATGC", "TACG", invertida)                  # troca cada base pelo seu par
+}
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+reverso_complementar("ATGGCC")
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+reverso_complementar(reverso_complementar(seq_dna)) == seq_dna    # um bom teste!
+```
+
+-   Teste sempre com um caso em que você **já sabe a resposta**;
+
+## Tm de um primer
+
+-   A regra de Wallace, para oligos curtos: **$Tm = 2 × (A + T) + 4 × (G + C)$**;
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|2|3-4|5"
+tm_wallace <- function(primer) {
+  bases <- strsplit(toupper(primer), "")[[1]]
+  n_at <- sum(bases %in% c("A", "T"))      # quantas bases A ou T
+  n_gc <- sum(bases %in% c("G", "C"))      # quantas bases G ou C
+  2 * n_at + 4 * n_gc
+}
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+tm_wallace("ATGGCCCTGTGG")
+```
+
+## Funções que tomam decisões: `if` e `else`
+
+-   Por convenção, Wallace vale até 13 nt; para primers mais longos, usa-se outra fórmula;
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|3-4|5-9|10"
+tm_primer <- function(primer) {
+  bases <- strsplit(toupper(primer), "")[[1]]
+  n <- length(bases)                       # tamanho do primer
+  n_gc <- sum(bases %in% c("G", "C"))      # quantas bases G ou C
+  if (n < 14) {
+    tm <- 2 * (n - n_gc) + 4 * n_gc        # regra de Wallace
+  } else {
+    tm <- 64.9 + 41 * (n_gc - 16.4) / n    # fórmula para primers mais longos
+  }
+  round(tm, 1)
+}
+```
+
+```{r}
+#| echo: true
+#| results: hold
+#| output-location: column-fragment
+tm_primer("ATGGCCCTGTGG")             # 12 nt
+tm_primer("AGCTTGACCGTAGGCTAACG")     # 20 nt
+```
+
+## Automatizando: muitas sequências
+
+```{r}
+#| echo: true
+primers <- c(
+  P1_F = "AGCTTGACCGTAGGCTAACG",
+  P1_R = "TTGCACGGATCCATGACTGA",
+  P2_F = "GGCCGCGGATCCGCGGCC",
+  P2_R = "ATTATAAATGCATTTAGAAT"
+)
+```
+
+-   As nossas funções analisam **uma** sequência por vez; `sapply()` repete o trabalho para cada elemento;
+
+```{r}
+#| echo: true
+#| output-location: fragment
+sapply(primers, conteudo_gc)
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+sapply(primers, tm_primer)
+```
+
+## Do vetor de primers à tabela
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|2|3|4|5"
+#| output-location: fragment
+tabela <- data.frame(
+  primer  = names(primers),
+  tamanho = nchar(primers),
+  gc      = sapply(primers, conteudo_gc),
+  tm      = sapply(primers, tm_primer),
+  row.names = NULL
+)
+
+tabela
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+tabela[tabela$gc >= 40 & tabela$gc <= 60, ]    # quais primers passam no critério de GC?
+```
+
+## Receita para escrever uma função
+
+1.  Resolva o problema para **um** caso, passo a passo;
+
+2.  Identifique o que muda de um caso para outro: esses são os **argumentos**;
+
+3.  Embrulhe os passos em `function()` e dê um nome que diga o que ela faz;
+
+4.  Teste com casos em que você já sabe a resposta;
+
+5.  Aplique a muitos casos com `sapply()`;
+
+::: callout-note
+## Na vida real
+
+Essas fórmulas de Tm são aproximações didáticas. Ferramentas como o Primer3 usam o modelo de vizinhos mais próximos (*nearest-neighbor*), que considera a concentração de sais e de primers.
+:::
+
+## Tidyverse
+
+::::: columns
+::: {.column width="58%"}
+-   Coleção de pacotes para ciência de dados que compartilham a mesma filosofia, gramática e estrutura de dados;
+
+-   Instalar: `install.packages("tidyverse")`;
+
+-   Carregar, a cada sessão:
+
+```{r}
+#| echo: true
+#| message: false
+library(tidyverse)
+```
+:::
+
+::: {.column width="42%"}
+| Pacote    | Para quê                 |
+|-----------|--------------------------|
+| `readr`   | importar arquivos        |
+| `tidyr`   | organizar tabelas        |
+| `dplyr`   | transformar e resumir    |
+| `ggplot2` | visualizar               |
+| `stringr` | trabalhar com texto      |
+| `purrr`   | aplicar funções a listas |
+:::
+:::::
+
+## Tidyverse: R base × dplyr
+
+::::: columns
+::: {.column width="50%"}
+**R base**
+
+```{r}
+#| echo: true
+amostras[amostras$rin >= 8,
+         c("amostra", "condicao", "rin")]
+```
+:::
+
+::: {.column width="50%"}
+**Tidyverse**
+
+```{r}
+#| echo: true
+amostras |>
+  filter(rin >= 8) |>
+  select(amostra, condicao, rin)
+```
+:::
+:::::
+
+-   O *pipe* `|>` (ou `%>%`) lê-se **"e então"**: o código fica na ordem em que pensamos;
+
+## Tidyverse: dados *tidy*
+
+-   Cada **variável** é uma coluna, cada **observação** é uma linha, cada **valor** é uma célula;
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|1|2|3|4|5|7"
+#| output-location: fragment
+contagens_tidy <- contagens |>
+  as.data.frame() |>
+  rownames_to_column("gene") |>
+  pivot_longer(cols = -gene, names_to = "amostra", values_to = "contagem") |>
+  left_join(amostras, by = "amostra")
+
+head(contagens_tidy, 4)
+```
+
+## Tidyverse: do dado ao gráfico
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|1|2|3|4-6"
+#| output-location: fragment
+#| fig-width: 14
+#| fig-height: 3
+#| fig-align: center
+ggplot(contagens_tidy, aes(x = condicao, y = contagem, color = condicao)) +
+  geom_point(size = 4) +
+  facet_wrap(~ gene, scales = "free_y", nrow = 1) +
+  labs(x = NULL, y = "Contagem") +
+  theme_bw(base_size = 18) +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 30, hjust = 1))
+```
+

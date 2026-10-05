@@ -1,0 +1,4 @@
+- source: press.qmd
+  netlify:
+    - id: f58fda4d-bc0d-4252-9e54-b7632136f7bb
+      url: https://bioinfo-intro-r.netlify.app
