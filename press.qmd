@@ -201,7 +201,7 @@ set.seed(2026)
 rnorm(n = 5, mean = 10, sd = 2)
 ```
 
-. . . 
+. . .
 
 ::: callout-important
 ## Em análises reais
@@ -726,7 +726,6 @@ teste$estimate
 
 -   Quase toda função de análise devolve uma lista; saber extrair elementos dela é essencial;
 
-
 ## Listas: juntando tudo
 
 ```{r}
@@ -853,7 +852,7 @@ reverso_complementar(reverso_complementar(seq_dna)) == seq_dna    # um bom teste
 
 ## Tm de um primer
 
--   A regra de Wallace, para oligos curtos: **$Tm = 2 × (A + T) + 4 × (G + C)$**;
+-   A regra de Wallace, para oligos curtos: $Tm = 2 × (A + T) + 4 × (G + C)$;
 
 ```{r}
 #| echo: true
@@ -1057,3 +1056,14 @@ ggplot(contagens_tidy, aes(x = condicao, y = contagem, color = condicao)) +
   theme(legend.position = "none", axis.text.x = element_text(angle = 30, hjust = 1))
 ```
 
+## Lista de atividades
+
+Lista de problemas:
+
+[Link](https://drive.google.com/file/d/1-1yR0pesNSGXq-ndmKsJRpcIKoeKXSCX/view?usp=sharing)
+
+Resolução:
+
+[Link](https://drive.google.com/file/d/1zuuKAYw0a0GFhVLW-FEsGwxqFHqu9zCE/view?usp=sharing)
+
+# Obrigado!
